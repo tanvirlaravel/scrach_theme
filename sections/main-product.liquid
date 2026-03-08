@@ -1,0 +1,16 @@
+<div class="product-page">
+    <div class="product-media">
+    {% comment %} প্রোডাক্টের প্রথম ছবিটি দেখাবে {% endcomment %}
+    <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}">
+  </div>
+
+    <div class="product-details">
+        <h1>{{ product.title }}</h1>
+    </div>
+</div>
+
+<style>
+  .product-page { display: flex; gap: 40px; padding: 50px; }
+  .product-media img { max-width: 100%; border-radius: 8px; }
+  .add-to-cart-btn { background: #000; color: #fff; padding: 15px 30px; border: none; cursor: pointer; }
+</style>
