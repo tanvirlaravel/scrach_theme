@@ -1,0 +1,21 @@
+<div class="page-width">
+  <h1>{{ collection.title }}</h1>
+  
+  <div class="product-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+    {% comment %} paginate ব্যবহার করা হয় যাতে এক পেজে সব প্রোডাক্ট এসে সাইট স্লো না করে দেয় {% endcomment %}
+    {% paginate collection.products by 12 %}
+      {% for product in collection.products %}
+        <div class="product-card">
+          <a href="{{ product.url }}">
+            <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title }}">
+            <h3>{{ product.title }}</h3>
+            <p>{{ product.price | money }}</p>
+          </a>
+        </div>
+      {% endfor %}
+
+      {% comment %} পেজিনেশন লিঙ্ক (১, ২, ৩... পৃষ্ঠা) {% endcomment %}
+      {{ paginate | default_pagination }}
+    {% endpaginate %}
+  </div>
+</div>
