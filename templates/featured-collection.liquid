@@ -1,0 +1,60 @@
+{% comment %} 
+  ১. HTML স্ট্রাকচার: এখানে আমরা কালেকশনের টাইটেল এবং প্রোডাক্ট গ্রিড তৈরি করছি। 
+{% endcomment %}
+<div class="featured-collection-section">
+  <h2>{{ section.settings.title }}</h2> <div class="product-grid">
+    {% comment %} 
+      ৩. লুপ চালানো: ক্লায়েন্ট যে কালেকশন সিলেক্ট করবে, তার প্রথম ৪টি প্রোডাক্ট দেখাবে। 
+    {% endcomment %}
+    {% assign collection = section.settings.collection %}
+    
+    {% for product in collection.products limit: 4 %}
+      <div class="product-card">
+        <a href="{{ product.url }}">
+          <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title }}">
+          <h3>{{ product.title }}</h3>
+          <p>{{ product.price | money }}</p> </a>
+      </div>
+    {% else %}
+      {% comment %} ৫. যদি কোনো কালেকশন সিলেক্ট করা না থাকে, তবে এই মেসেজটি আসবে {% endcomment %}
+      <p>অনুগ্রহ করে কাস্টমাইজার থেকে একটি কালেকশন সিলেক্ট করুন।</p>
+    {% endfor %}
+  </div>
+</div>
+
+{% comment %} 
+  ৬. CSS: সেকশনটিকে সুন্দর করার জন্য বেসিক স্টাইলিং। 
+{% endcomment %}
+<style>
+  .featured-collection-section { padding: 40px; text-align: center; }
+  .product-grid { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
+  .product-card { border: 1px solid #eee; padding: 15px; width: 200px; }
+  .product-card img { max-width: 100%; height: auto; }
+</style>
+
+{% comment %} 
+  ৭. Schema: এটিই কাস্টমাইজারে অপশনগুলো তৈরি করে। 
+{% endcomment %}
+{% schema %}
+{
+  "name": "Featured Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "আমাদের সেরা পণ্যসমূহ"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection"
+    }
+  ]
+}
+{% endschema %}
