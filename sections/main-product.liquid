@@ -1,12 +1,25 @@
 <div class="product-page">
-    <div class="product-media">
-    
+  <div class="product-media">
+    {% comment %} প্রোডাক্টের প্রথম ছবিটি দেখাবে {% endcomment %}
     <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}">
   </div>
 
-    <div class="product-details">
-        <h1>{{ product.title }}</h1>
+  <div class="product-details">
+    <h1>{{ product.title }}</h1>
+    <p class="price">{{ product.price | money }}</p>
+    
+    {% comment %} ৩. কার্টে অ্যাড করার ফর্ম (Essential) {% endcomment %}
+    {% form 'product', product %}
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+      <button type="submit" name="add" class="add-to-cart-btn">
+        Add to Cart
+      </button>
+    {% endform %}
+
+    <div class="description">
+      {{ product.description }}
     </div>
+  </div>
 </div>
 
 <style>
